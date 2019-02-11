@@ -10,7 +10,6 @@ class Item extends React.Component{
 
     handleClick = () => {
         this.setState({crossed: !this.state.crossed});
-        console.log(this.state.crossed)
     }
 
 

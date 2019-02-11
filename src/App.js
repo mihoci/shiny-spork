@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import uuidv1 from 'uuid/v1';
 import Item from './components/item';
 import './App.css';
 
@@ -22,9 +23,11 @@ class App extends Component {
   }
 
   addToArray = event => {
-    if((this.state.item !== '' && event.type === 'keypress' && event.key === 'Enter') || event.type === 'click'){
+    const item = this.state.item;
+    if((item !== '' && event.type === 'keypress' && event.key === 'Enter') || event.type === 'click'){
       let list = this.state.todoList;
-      list.push(this.state.item);
+
+      list.push({name: item, id: uuidv1()});
       this.setState({todoList: list});
       this.setState({item: ''});
     }
@@ -32,7 +35,7 @@ class App extends Component {
 
   render() {
     const list = this.state.todoList.map((item, index) =>{
-      return <Item key={index} name={item} index={index} onDelete={this.handleDelete}/>
+      return <Item key={item.id} name={item.name} index={index} onDelete={this.handleDelete}/>
     });
 
     return (
