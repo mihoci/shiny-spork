@@ -15,31 +15,19 @@ class App extends Component {
     this.setState({item: event.target.value});
   }
 
-  handleClick = event => {
-    this.addToArray();
-  }
-
-  handleKeyPress = event => {
-    console.log(this.event);
-    if(event.key === 'Enter'){
-      this.addToArray();
-    }
-  }
-
   handleDelete = index =>{
     let list = this.state.todoList.slice();
     list.splice(index, 1);
     this.setState({todoList: list});
   }
 
-  addToArray = () => {
-    if(this.state.item===''){
-      return;
+  addToArray = event => {
+    if((this.state.item !== '' && event.type === 'keypress' && event.key === 'Enter') || event.type === 'click'){
+      let list = this.state.todoList;
+      list.push(this.state.item);
+      this.setState({todoList: list});
+      this.setState({item: ''});
     }
-    let list = this.state.todoList;
-    list.push(this.state.item);
-    this.setState({todoList: list});
-    this.setState({item: ''});
   }
 
   render() {
@@ -50,12 +38,14 @@ class App extends Component {
     return (
       <div className="App">
         <h1>TODO List</h1>
-        <input type='text' value={this.state.item} onChange={this.onInputChange} onKeyPress={this.handleKeyPress}/>
-        <input type='button' value='ADD' onClick={this.handleClick}/>
+        <input type='text' value={this.state.item} onChange={this.onInputChange} onKeyPress={this.addToArray}/>
+        <input type='button' value='ADD' onClick={this.addToArray}/>
+        <br></br>
+        <p>{'-'+this.state.item+'-'}</p>
         {list}
       </div>
     );
   }
 }
-
+  
 export default App;
