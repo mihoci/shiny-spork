@@ -24,9 +24,10 @@ class App extends Component {
 
   addToArray = event => {
     const item = this.state.item;
-    if((item !== '' && event.type === 'keypress' && event.key === 'Enter') || event.type === 'click'){
-      let list = this.state.todoList;
 
+    if(item !== '' && ((event.type === 'keypress' && event.key === 'Enter') || event.type === 'click')){
+      console.log(item)
+      let list = this.state.todoList;
       list.push({name: item, id: uuidv1()});
       this.setState({todoList: list});
       this.setState({item: ''});
